@@ -14,5 +14,21 @@ namespace AntiXssString.Tests
             string actual = sut;
             Assert.AreNotEqual(actual, s);
         }
+
+        [TestMethod]
+        public void Script_Tags_Should_Be_Removed_On_Concat()
+        {
+            AntiXssString sut = "<script>window.alert('hello, world')</script>";
+            var newString = "" + sut;
+            Assert.AreNotEqual("<script>window.alert('hello, world')</script>", newString);
+        }
+
+        [TestMethod]
+        public void Script_Tags_Should_Be_Removed_On_Format()
+        {
+            AntiXssString sut = "<script>window.alert('hello, world')</script>";
+            var newString = string.Format("{0}", sut);
+            Assert.AreNotEqual("<script>window.alert('hello, world')</script>", newString);
+        }
     }
 }
